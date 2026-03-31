@@ -10,23 +10,12 @@ int main(){
 	int tamanho = linha*coluna+2;
 	float matrizA[tamanho];
 	matrizA[0] = linha; matrizA[1] = coluna;
-	puts("Preencha a matriz: ");
-	preencherMatriz(matrizA);
-	printf("Digite a ordem de uma outra matriz: ");
-	scanf("%dx%d",&linha,&coluna);
-	tamanho = linha*coluna+2;
-	float matrizB[tamanho];
-	matrizB[0] = linha; matrizB[1] = coluna;
-	puts("Preencha a matriz: ");
-	preencherMatriz(matrizB);
-	puts("Matriz A: ");
+
+	anularMatriz(matrizA);
 	exibirMatriz(matrizA);
-	puts("Matriz B: ");
-	exibirMatriz(matrizB);
-	puts("Soma das duas matrizes: ");
-	float matrizC[tamanho];
-	somarMatrizes(matrizA, matrizB, matrizC);
-	exibirMatriz(matrizC);
+	adicionarElementoMatriz(matrizA, 1, 1, 2);
+	exibirMatriz(matrizA);
+	printf("\n\n%d",buscarElementoMatriz(matrizA, 1, 2));
 	return 0;
 }
 

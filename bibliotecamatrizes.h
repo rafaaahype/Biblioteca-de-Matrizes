@@ -16,7 +16,7 @@ void preencherMatriz(float vetor[]){
 
 void anularMatriz(float vetor[]){
     for(int i=2; i<vetor[0]*vetor[1]+2; i++){
-        vetor[i]=0;
+        vetor[i]=0;	
     }
 }
 
@@ -24,26 +24,29 @@ void exibirMatriz(float vetor[]){
     int cont=0;
     for(int i=2; i<vetor[0]*vetor[1]+2; i++){
         printf("%6.2f ", vetor[i]);
-        if(++cont%(int)vetor[1]==0) printf("\n");
+        if(++cont%(int)vetor[1]==0) putchar('\n');
     }
     putchar('\n');
 }
 
 void adicionarElementoMatriz(float vetor[], float elemento, int linha, int coluna){
-    vetor[(linha*coluna)+1]=elemento;
+    //vetor[(linha*coluna)+1]=elemento;
+    vetor[(linha*((int)vetor[1]-2)+coluna)]=elemento;
 }
 
 void removerElementoMatriz(float vetor[], int linha, int coluna){
     vetor[(linha*coluna)+1]=0;
 }
 
-int pegarElementoMatriz(float vetor[], int linha, int coluna){
-    return vetor[(linha*coluna)+1];
+int buscarElementoMatriz(float vetor[], int linha, int coluna){
+    //return vetor[(linha*coluna)+1];
+     
+    return vetor[(linha*((int)vetor[1]-2)+coluna)];
 }
 
 void somarMatrizes(float vetorA[], float vetorB[], float vetorC[]){ 
 	if(vetorA[0]!=vetorB[0]&&vetorA[1]!=vetorB[1]){
-		printf("Não é possível efetuar a soma dessas matrizes. A ordem é diferente.");
+		puts("Não é possível efetuar a soma dessas matrizes. A ordem é diferente.");
 		return ;
 	}
 	int tamanho = vetorA[0]*vetorA[1]+2;
@@ -53,7 +56,10 @@ void somarMatrizes(float vetorA[], float vetorB[], float vetorC[]){
 	}
 }
 void subtrairMatriz(float vetorA[], float vetorB[], float vetorC[]){ 
-	if(vetorA[0]!=vetorB[0]&&vetorA[1]!=vetorB[1]) return ;
+	if(vetorA[0]!=vetorB[0]&&vetorA[1]!=vetorB[1]){
+		puts("Não é possível efetuar a subtração dessas matrizes. A ordem é diferente.");
+		return ;
+	}
 	int tamanho = vetorA[0]*vetorA[1]+2;
 	vetorC[0]=vetorA[0]; vetorC[1]=vetorA[1]; //recebe a ordem
 	for(int i=2; i<tamanho; i++){
@@ -61,4 +67,3 @@ void subtrairMatriz(float vetorA[], float vetorB[], float vetorC[]){
 	}
 }
 #endif // BIBLIOTECAMATRIZES_H_INCLUDED
-
