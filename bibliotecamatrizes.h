@@ -21,7 +21,7 @@ void anularMatriz(float vetor[])
 {
     for(int linha=1; linha <= (int)vetor[0]; linha++){
         for(int coluna=1; coluna <= (int)vetor[1]; coluna++){
-            adicionarElementoMatriz(vetor, 0, linha, coluna);
+            removerElementoMatriz(vetor, linha, coluna);
         }
     }
 }
