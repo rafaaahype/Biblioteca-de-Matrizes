@@ -2,68 +2,80 @@
 #define BIBLIOTECAMATRIZES_H_INCLUDED
 #include <stdio.h>
 
-void preencherMatriz(float vetor[]){
-    int linha=1, coluna=1;
-    for(int i=2; i<vetor[0]*vetor[1]+2; i++) {
-        printf("Digite o valor do elemento %dx%d: ", linha, coluna++);
-        if(coluna>vetor[1]){
-            coluna=1; linha++;
+float buscarElementoMatriz(float vetor[], int linha, int coluna);
+void adicionarElementoMatriz(float vetor[], float elemento, int linha, int coluna);
+void removerElementoMatriz(float vetor[], int linha, int coluna);
+
+void preencherMatriz(float vetor[])
+{
+    for(int linha=1; linha <= (int)vetor[0]; linha++){
+        for(int coluna=1; coluna <= (int)vetor[1]; coluna++){
+            printf("Digite um elemento %dx%d: ",linha,coluna);
+            float elemento; scanf("%f",&elemento);
+            adicionarElementoMatriz(vetor, elemento, linha, coluna);
         }
-        float elemento; scanf("%f",&elemento);
-        vetor[i]=elemento;
-    }  
-}
-
-void anularMatriz(float vetor[]){
-    for(int i=2; i<vetor[0]*vetor[1]+2; i++){
-        vetor[i]=0;	
     }
 }
 
-void exibirMatriz(float vetor[]){
-    int cont=0;
-    for(int i=2; i<vetor[0]*vetor[1]+2; i++){
-        printf("%6.2f ", vetor[i]);
-        if(++cont%(int)vetor[1]==0) putchar('\n');
+void anularMatriz(float vetor[])
+{
+    for(int linha=1; linha <= (int)vetor[0]; linha++){
+        for(int coluna=1; coluna <= (int)vetor[1]; coluna++){
+            adicionarElementoMatriz(vetor, 0, linha, coluna);
+        }
     }
-    putchar('\n');
 }
 
-void adicionarElementoMatriz(float vetor[], float elemento, int linha, int coluna){
-    //vetor[(linha*coluna)+1]=elemento;
-    vetor[(linha*((int)vetor[1]-2)+coluna)]=elemento;
+void exibirMatriz(float vetor[])
+{
+    for(int linha=1; linha <= (int)vetor[0]; linha++){
+        for(int coluna=1; coluna <= (int)vetor[1]; coluna++){
+            printf("%6.2f ", buscarElementoMatriz(vetor, linha, coluna));
+        }
+        putchar('\n');
+    }
 }
 
-void removerElementoMatriz(float vetor[], int linha, int coluna){
-    vetor[(linha*coluna)+1]=0;
+void adicionarElementoMatriz(float vetor[], float elemento, int linha, int coluna)
+{
+    vetor[2 + (linha - 1) * (int)vetor[1] + (coluna - 1)] = elemento;
 }
 
-int buscarElementoMatriz(float vetor[], int linha, int coluna){
-    //return vetor[(linha*coluna)+1];
-     
-    return vetor[(linha*((int)vetor[1]-2)+coluna)];
+void removerElementoMatriz(float vetor[], int linha, int coluna)
+{
+    vetor[2 + (linha - 1) * (int)vetor[1] + (coluna - 1)] = 0;
 }
 
-void somarMatrizes(float vetorA[], float vetorB[], float vetorC[]){ 
-	if(vetorA[0]!=vetorB[0]&&vetorA[1]!=vetorB[1]){
-		puts("Não é possível efetuar a soma dessas matrizes. A ordem é diferente.");
-		return ;
-	}
-	int tamanho = vetorA[0]*vetorA[1]+2;
-	vetorC[0]=vetorA[0]; vetorC[1]=vetorA[1]; //recebe a ordem
-	for(int i=2; i<tamanho; i++){
-		vetorC[i]=vetorA[i]+vetorB[i];
-	}
+float buscarElementoMatriz(float vetor[], int linha, int coluna)
+{
+
+    return vetor[2 + (linha - 1) * (int)vetor[1] + (coluna - 1)];
 }
-void subtrairMatriz(float vetorA[], float vetorB[], float vetorC[]){ 
-	if(vetorA[0]!=vetorB[0]&&vetorA[1]!=vetorB[1]){
-		puts("Não é possível efetuar a subtração dessas matrizes. A ordem é diferente.");
-		return ;
-	}
-	int tamanho = vetorA[0]*vetorA[1]+2;
-	vetorC[0]=vetorA[0]; vetorC[1]=vetorA[1]; //recebe a ordem
-	for(int i=2; i<tamanho; i++){
-		vetorC[i]=vetorA[i]-vetorB[i];
-	}
+
+void somarMatrizes(float vetorA[], float vetorB[], float vetorC[])
+{
+    if (vetorA[0] != vetorB[0] || vetorA[1] != vetorB[1])
+    {
+        puts("Não é possível efetuar a soma dessas matrizes. A ordem é diferente.");
+        return;
+    }
+    for(int linha=1; linha <= vetorA[0]; linha++){
+        for(int coluna=1; coluna <= vetorA[1]; coluna++){
+            adicionarElementoMatriz(vetorC, buscarElementoMatriz(vetorA, linha, coluna) + buscarElementoMatriz(vetorB, linha, coluna), linha, coluna);
+        }
+    }
 }
-#endif // BIBLIOTECAMATRIZES_H_INCLUDED
+void subtrairMatriz(float vetorA[], float vetorB[], float vetorC[])
+{
+    if (vetorA[0] != vetorB[0] || vetorA[1] != vetorB[1])
+    {
+        puts("Não é possível efetuar a soma dessas matrizes. A ordem é diferente.");
+        return;
+    }
+    for(int linha=1; linha <= vetorA[0]; linha++){
+        for(int coluna=1; coluna <= vetorA[1]; coluna++){
+            adicionarElementoMatriz(vetorC, buscarElementoMatriz(vetorA, linha, coluna) - buscarElementoMatriz(vetorB, linha, coluna), linha, coluna);
+        }
+    }
+}
+#endif // BIBLIOTECAMATRIZES_H_INCLUDED;
