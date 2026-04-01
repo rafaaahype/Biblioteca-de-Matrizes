@@ -12,6 +12,53 @@ void criarCopia(float vetor[], float vetorCopia[]);
 void criarTransposta(float vetor[], float vetorTransposto[]);
 void multiplicarMatriz(float vetorA[], float vetorB[], float vetorC[]);
 
+int contarSaidas(float vetor[], int cidade);
+int contarEntradas(float vetor[], int cidade);
+void cidadesIsoladas(float vetor[], int cidade);
+void semSaidaComEntrada(float vetor[]);
+
+int contarSaidas(float vetor[], int cidade) {
+    int saidas = 0;
+    for (int coluna = 1; coluna <= (int)vetor[1]; coluna++){
+        if (coluna != cidade && (int)buscarElementoMatriz(vetor, cidade, coluna) == 1) saidas++;
+    }
+    return saidas;
+}
+
+// mesma coisa de contar as saides
+//A coluna representa todas as estradad qye chegam naquela cidade
+
+
+int contarEntradas(float vetor[], int cidade) {
+    int entradas = 0;
+    for (int linha = 1; linha <= (int)vetor[0]; linha++){
+        if (linha != cidade && (int)buscarElementoMatriz(vetor, linha, cidade) == 1) entradas++;
+    }
+    return entradas;
+}
+
+void cidadesIsoladas(float vetor[], int cidade) {
+    int encontrou = 0;
+    for (int cidade = 1; cidade <= (int)vetor[0]; cidade++) {
+        if (contarSaidas(vetor, cidade) == 0 && contarEntradas(vetor, cidade) == 0) {
+            printf("  Cidade %d\n", cidade - 1);
+            encontrou = 1;
+        }
+    }
+    if (encontrou == 0) printf("  Nenhuma cidade isolada.\n");
+}
+
+void semSaidaComEntrada(float vetor[]) {
+    int encontrou = 0;
+    for (int cidade = 1; cidade <= (int)vetor[0]; cidade++) {
+        if (contarSaidas(vetor, cidade) == 0 && contarEntradas(vetor, cidade) > 0) {
+            printf("  Cidade %d\n", cidade - 1);
+            encontrou = 1;
+        }
+    }
+    if (encontrou == 0) printf("  Nenhuma.\n");
+}
+
 void dimensionarMatriz(float vetor[], int linhas, int colunas){
     vetor[0] = linhas; vetor[1] = colunas;
 }
@@ -58,7 +105,6 @@ void removerElementoMatriz(float vetor[], int linha, int coluna)
 
 float buscarElementoMatriz(float vetor[], int linha, int coluna)
 {
-
     return vetor[2 + (linha - 1) * (int)vetor[1] + (coluna - 1)];
 }
 
@@ -136,24 +182,5 @@ void multiplicarMatriz(float vetorA[], float vetorB[], float vetorC[]){
         }
     }
 }
-
-
-// void multiplicarMatrizRafael(float vetorA[], float vetorB[], float **vetorC){
-//     if(vetorA[1]!=vetorB[0]){
-//         puts("É impossível realizar essa multiplicação.");
-//         return ;
-//     }
-//     int novoTamanhoMatriz = 2+(vetorA[0]*vetorB[1]);
-//     float *vetorTemporario = realloc(*vetorC,novoTamanhoMatriz*sizeof(float));
-//     if(vetorTemporario==NULL){
-//         puts("Erro na realocação de memória");
-//         return ;
-//     }
-//     *vetorC = vetorTemporario;
-//     (*vetorC)[0] = (float)vetorA[0];
-//     (*vetorC)[1] = (float)vetorB[1];
-//     printf("teste realoc | l: %d | c: %d",(int)(*vetorC)[0],(int)(*vetorC)[1]);
-    
-// }
 
 #endif // BIBLIOTECAMATRIZES_H_INCLUDED;
