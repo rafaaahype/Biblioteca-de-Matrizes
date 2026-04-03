@@ -1,61 +1,80 @@
 /*
  * PROGRAMADORES: RAFAEL VIEIRA, JEFFERSON ALVES, TOMÁS FREITAS, RAY DAVYD
  */
-#include "bibliotecamatrizes.h"
 #include <stdio.h>
+#include <stdlib.h>
+#include "bibliotecamatrizes.h" 
 
-int main(){
-	printf("Digite a ordem de uma matriz (formato: linhaxcoluna): ");
-	int linha, coluna; scanf("%dx%d",&linha,&coluna);
-	int tamanho = linha*coluna+2;
-	float matrizA[tamanho], matrizB[tamanho], matrizC[tamanho];
-	dimensionarMatriz(matrizA, linha, coluna);
-	printf("Digite a ordem de uma matriz (formato: linhaxcoluna): ");
-	scanf("%dx%d",&linha,&coluna);
-	tamanho = linha*coluna+2;
-	dimensionarMatriz(matrizB, linha, coluna);
-	dimensionarMatriz(matrizC, linha, coluna);
-
-	//main rafael
-	//float *matrizD = (float *)malloc(tamanho*sizeof(float));
-	//multiplicarMatrizRafael(matrizA, matrizB, &matrizD);
-	/*
-	preencherMatriz(matrizA);
-	anularMatriz(matrizB);
-	adicionarElementoMatriz(matrizB, 5, 1, 1);
-	somarMatrizes(matrizA, matrizB, matrizC);
-	exibirMatriz(matrizC);
-	*/
-/*
-	preencherMatriz(matrizA);
-	criarTransposta(matrizA, matrizB);
-	printf("\n\n\n");
-	exibirMatriz(matrizB);
-*/
+/*NOTA: Para maior organização e abstração, separamos as funções na
+biblioteca "bibliotecamatrizes.h". Este main.c atua apenas como 
+programa cliente para testar a lógica.*/
 
 
+int main()
+{
+    int linha, coluna;
+    printf("Digite a ordem da matriz A (formato: linhaxcoluna): ");
+    scanf("%dx%d", &linha, &coluna);
 
+    int tamanhoA = linha * coluna + 2;
+    float matrizA[tamanhoA];
+    dimensionarMatriz(matrizA, linha, coluna);
 
-	preencherMatriz(matrizA);
-	exibirMatriz(matrizA);
+    printf("\nPreencha a matriz A:\n");
+    preencherMatriz(matrizA);
 
-	preencherMatriz(matrizB);
-	exibirMatriz(matrizB);
+    printf("\nMatriz A:\n");
+    exibirMatriz(matrizA);
 
-	multiplicarMatriz(matrizA, matrizB, matrizC);
+    // Questão 1
+    printf("\n");
+    cidadesIsoladas(matrizA);
+    semSaidaComEntrada(matrizA);
+    comSaidaSemEntrada(matrizA);
+    cidadeMaisEntradas(matrizA);
+    
+    int k;
+    printf("Digite a cidade k para o item v: ");
+    scanf("%d", &k);
+    saidasParaK(matrizA, k);
+    
+    int roteiro[] = {2, 3, 2, 1, 0};
+    verificaRoteiro(matrizA, roteiro, 5);
 
-	putchar('\n');
+    // Questão 2
+    printf("\nQUESTAO 2 - Digite a ordem da matriz (formato: linhaxcoluna): ");
+    int linhaC, colunaC;
+    scanf("%dx%d", &linhaC, &colunaC);
+    while (getchar() != '\n');
 
-	if(matrizC[0]==matrizA[0]&&matrizC[1]==matrizA[1])7
-		exibirMatriz(matrizC);
+    int tamanhoC = linhaC * colunaC + 2;
+    float matrizC[tamanhoC];
+    float matrizD[tamanhoC];
+    dimensionarMatriz(matrizC, linhaC, colunaC);
+    dimensionarMatriz(matrizD, linhaC, colunaC);
 
-		if(matrizIdentidade(matrizC)) printf("EH IDENTIDADE");
-		else printf("NAO EH IDENETIDADE");
-	return 0;
+    printf("\nPreencha a matriz C:\n");
+    preencherMatriz(matrizC);
+
+    printf("\nPreencha a matriz D:\n");
+    preencherMatriz(matrizD);
+
+    printf("\nMatriz C:\n");
+    exibirMatriz(matrizC);
+
+    printf("\nMatriz D:\n");
+    exibirMatriz(matrizD);
+
+    putchar('\n');
+    if (matrizInversa(matrizD, matrizC))
+    {
+        printf("QUESTAO 2 = SAO INVERSAS\n");
+    }
+    else
+    {
+        printf("QUESTAO 2 = NAO SAO INVERSAS\n");
+    }
+
+    return 0;
 }
 
-/*
- *
- * HÁ MAIS FUNÇÕES DISPONÍVEIS QUE O USUÁRIO PODE EXPLORAR À VONTADE.
- *
- */
